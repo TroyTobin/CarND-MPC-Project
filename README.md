@@ -2,6 +2,62 @@
 Self-Driving Car Engineer Nanodegree Program
 
 ---
+# PROJECT NOTES
+
+## The Model
+The model used maintains state for the following vehicle state
+ * Vehicle position (x, y)
+ * Vehicle orientation
+ * Vehicle velocity
+ * Vehicle cross track error
+ * Vehicle steering anlge
+ * Vehicle acceleration
+
+It is goverened by a set of equations for updating this state through time.
+
+  Equations for the model:
+      x_[t] = x[t-1] + v[t-1] * cos(psi[t-1]) * dt
+      y_[t] = y[t-1] + v[t-1] * sin(psi[t-1]) * dt
+      psi_[t] = psi[t-1] + v[t-1] / Lf * delta[t-1] * dt
+      v_[t] = v[t-1] + a[t-1] * dt
+      cte[t] = f(x[t-1]) - y[t-1] + v[t-1] * sin(epsi[t-1]) * dt
+      epsi[t] = psi[t] - psides[t-1] + v[t-1] * delta[t-1] / Lf * dt
+
+
+
+## Timestep Length and Elapsed Duration (N & dt)
+The timestemp and the elapsed duration are used to determine the prediction horizon for the model.  That is, how far into the future the mode predicts the vehicles movements along a path (in our case a fit polynomial).
+ * N is the number of timesteps in the horizon
+ * dt is the elaped time between actuations
+
+Combining these we can determine the prediction horizon (how far into the future we are predicting the path).
+ * T = N*dt 
+
+The greater the value of T, the greater the uncertainty of the path (as we are projecting further into the future)
+I have found that my model becomes increasingly unstable as the prediction horizon increases past the 1s threshold.
+Therefore I have maintined a horizon less than 1s and have settled on 0.75s.
+
+In my case, I have used the following parameters
+ * dt = 0.05.
+    * This was chosen to be half that of the system latency (100ms)
+ * N = 15
+
+This means that the prediction horizon is 0.75s
+
+I did try several different values for this model, including (25, 0.05), (10, 0.02), (10, 0.05).  However as the horizon increases the model become unstable and oscillations increased.  The values that I settled on provided the most stable vehicle traversal.
+
+## Polynomial Fitting and MPC Preprocessing
+
+Waypoints are provided from the simulator.  as a set of global x,y points.
+These are first translated to the vehicle coordinate system and a polynomial fit to teh points.  This provides an approximation for the path that the vehicle should take to traverse the course.
+I found that a 4th order polynomial provided the best fit for the waypoints, having tried the following polynomal orders (1,2,3,4). 
+
+
+
+## Model Predictive Control with Latency
+Introducing latency means that the vehicle moves past the point of the path prediction and calculations.  This means that the system becomes unstable as the vehicle "overshoots".  Therefore, before the model is updated and prediction performed, the vehicle is progressed in time the amount of the latency.  This means that the (x,y) positions are updated based on the current velocity and steering angle.  Additionally the orientation is also updated based on the steering angle and the distance between the front of the vehicle and its center of gravity.
+
+---
 
 ## Dependencies
 

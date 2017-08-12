@@ -15,7 +15,7 @@ using CppAD::AD;
 #define TIME_DELTA             (0.05)
 
 // velocity to use
-#define VELOCITY                 (80)
+#define VELOCITY                 (65)
 
 // Vars is all one long vector, 
 // so if N is 25 then the indices are assigned as follows:

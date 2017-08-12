@@ -118,8 +118,8 @@ int main()
           double orientation_veh =  - (velocity/Lf) * steering_angle_cur * LATENCY_MS/1000;
 
           // vehicle position in vehicle coordinates
-          double pos_x_veh = (velocity * LATENCY_MS/1000) * cos(steering_angle_cur);
-          double pos_y_veh = (velocity * LATENCY_MS/1000) * sin(steering_angle_cur);
+          double pos_x_veh = (velocity * LATENCY_MS/1000); // * cos(steering_angle_cur);
+          double pos_y_veh = 0; //(velocity * LATENCY_MS/1000) * sin(steering_angle_cur);
 
 
           // Fit a polynomial to the waypoints in vehicle coordinates

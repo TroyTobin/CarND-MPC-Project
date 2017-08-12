@@ -63,6 +63,9 @@ I found that a 4th order polynomial provided the best fit for the waypoints, hav
 ## Model Predictive Control with Latency
 Introducing latency means that the vehicle moves past the point of the path prediction and calculations.  This means that the system becomes unstable as the vehicle "overshoots".  Therefore, before the model is updated and prediction performed, the vehicle is progressed in time the amount of the latency.  This means that the (x,y) positions are updated based on the current velocity and steering angle.  Additionally the orientation is also updated based on the steering angle and the distance between the front of the vehicle and its center of gravity.
 
+## Result
+The result of this MPC model is shown in the video located at https://youtu.be/0Baxw3fbxjQ.
+
 ---
 
 ## Dependencies

@@ -16,13 +16,19 @@ The model used maintains state for the following vehicle state
 It is goverened by a set of equations for updating this state through time.
 
   Equations for the model:
+```
       x_[t] = x[t-1] + v[t-1] * cos(psi[t-1]) * dt
-      y_[t] = y[t-1] + v[t-1] * sin(psi[t-1]) * dt
-      psi_[t] = psi[t-1] + v[t-1] / Lf * delta[t-1] * dt
-      v_[t] = v[t-1] + a[t-1] * dt
-      cte[t] = f(x[t-1]) - y[t-1] + v[t-1] * sin(epsi[t-1]) * dt
-      epsi[t] = psi[t] - psides[t-1] + v[t-1] * delta[t-1] / Lf * dt
 
+      y_[t] = y[t-1] + v[t-1] * sin(psi[t-1]) * dt
+      
+      psi_[t] = psi[t-1] + v[t-1] / Lf * delta[t-1] * dt
+      
+      v_[t] = v[t-1] + a[t-1] * dt
+      
+      cte[t] = f(x[t-1]) - y[t-1] + v[t-1] * sin(epsi[t-1]) * dt
+      
+      epsi[t] = psi[t] - psides[t-1] + v[t-1] * delta[t-1] / Lf * dt
+```
 
 
 ## Timestep Length and Elapsed Duration (N & dt)
